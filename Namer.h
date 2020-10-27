@@ -20,5 +20,6 @@ class Namer
         vector <Name*> available_names;
         int number;
         char delimiter=',';
+        vector <string> franchise_frase;
 };
 #endif

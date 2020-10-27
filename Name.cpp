@@ -11,6 +11,9 @@ Name::Name(string info_line, char new_delimiter)
     string word;//Variable to save the infp in the line
     delimiter=new_delimiter;//Remember the delimiter
     getline(info_stream,name,new_delimiter);//Get the first member of the line, which is the name
+    getline(info_stream,word,new_delimiter);//Get the second memeber of the line, which is the franchise_index in str
+    franchise_index=stoi(word.c_str());//Convert str to int
+    getline(info_stream,frase,new_delimiter);//Get the third element of the line, which is the charcaters frase
     while(getline(info_stream,word,new_delimiter))//Fo every other characther in the line
     {
         paired_names_index.push_back(stoi(word));//Add it to the paired names index vector
@@ -54,7 +57,7 @@ string Name::getName()
 }
 string Name::getInfo()
 {
-    string line=name;
+    string line=name+delimiter+to_string(franchise_index)+delimiter+frase;
     for (int i=0;i<paired_names_index.size();i++)
     {
         if (paired_names_index[i]!=-1)
@@ -63,4 +66,10 @@ string Name::getInfo()
         }
     }
     return line;
+}
+string Name::getFrase(){
+    return frase;
+}
+int Name::getFranc(){
+    return franchise_index;
 }

@@ -42,8 +42,15 @@ void Namer::readFile(string file_name)//Reads a file and creates the name classe
     ifstream file;
     file.open(file_name);
     string line;
+    int num_franchises;
     getline(file,line);//Get the number which is the first line
     number=atoi(line.c_str());
+    getline(file,line);//Get the number of franchises from the second line
+    num_franchises=stoi(line.c_str());//Change from str to int
+    for (int j=0;j<num_franchises;j++){
+        getline(file,line);//Get the frase
+        franchise_frase.push_back(line);//Add it to the vector
+    }
     while (getline(file,line))
     {
         available_names.push_back(new Name(line, delimiter));
@@ -67,6 +74,8 @@ void Namer::run()//Starts the application
             given_name=available_names[first]->getName()+" "+available_names[second]->getName()+" "+changeToRoman(number);
             available_names[first]->addPairedName(second);
             number++;
+            cout<<franchise_frase[available_names[first]->getFranc()]<<" x "<<franchise_frase[available_names[second]->getFranc()]<<endl;//Print franchise crossover
+            cout<<endl<<available_names[first]->getFrase()<<endl<<available_names[second]->getFrase()<<endl;//Print characters frases
         }
     }
     cout<<"Your new amazing project is:"<<endl<<given_name<<endl;
@@ -75,8 +84,14 @@ void Namer::run()//Starts the application
 void Namer::saveChanges(string file_name)//Rewrites the file with the changed info
 {
     ofstream file (file_name);
-    file<<number;
+    file<<number<<endl;
+    file<<franchise_frase.size();
     vector<Name*>::const_iterator iterator;
+    vector<string>::const_iterator frase_iterator;
+    for (frase_iterator=franchise_frase.begin();frase_iterator!=franchise_frase.end();++frase_iterator)
+    {
+        file<<endl<<(*frase_iterator);//Add the frases to the file
+    }
     for (iterator=available_names.begin();iterator!=available_names.end();++iterator)
     {
         file<<endl<<(*iterator)->getInfo();

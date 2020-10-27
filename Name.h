@@ -30,10 +30,14 @@ class Name
         */
         string getName();
         string getInfo();
+        string getFrase();
+        int getFranc();
     protected:
         string name;
         vector <int> paired_names_index;
         string delimiter;
+        int franchise_index;
+        string frase;
 
 };
 
